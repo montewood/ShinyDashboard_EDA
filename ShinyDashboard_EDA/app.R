@@ -8,7 +8,7 @@ library(data.table)
 library(plotly)
 
 
-source('C:/Users/JDW/Desktop/my_cloud/OneDrive/R/shiny/EDA/chart_functions.R', encoding = "UTF-8") # 차트함수 불러오기
+source('./chart_functions.R', encoding = "UTF-8") # 차트함수 불러오기
 
 
 # testdata
@@ -60,8 +60,8 @@ ui <- dashboardPage(
             tabItem(tabName = 'table_dataset',
                     fluidRow(
                         box(title = 'datatable',
-                            width = 12, height = 600, status = 'success',
-                            DT::dataTableOutput(outputId = 'table', height = 600)
+                            width = 12, height = 660, status = 'success',
+                            DT::dataTableOutput(outputId = 'table', height = 660)
                         )
                     )
             ),
@@ -128,12 +128,13 @@ ui <- dashboardPage(
             tabItem(tabName = 'chart_den',
                     fluidRow(
                         box(title = 'density chart',
-                            width = 12, height = 600, status = 'success',
+                            width = 12, height = 660, status = 'success',
                             plotlyOutput(outputId = 'densitychart', height = 500),
                             column(3, checkboxInput(inputId = 'option.den.title_center', label = 'Title center')),
                             column(3, checkboxInput(inputId = 'option.den.axis_x_angle45', label = 'Axis x angle 45')),
                             column(3, checkboxInput(inputId = 'option.den.Remove_legend', label = 'Remove legend')),
-                            column(3, checkboxInput(inputId = 'option.den.View_value', label = 'Show values'))
+                            column(3, checkboxInput(inputId = 'option.den.View_value', label = 'Show values')),
+                            column(12, selectInput(inputId = 'option.den.themes', label = '', choices = theme_list))
                         )
                     ),
                     fluidRow(
@@ -186,12 +187,13 @@ ui <- dashboardPage(
             tabItem(tabName = 'chart_box',
                     fluidRow(
                         box(title = 'box chart',
-                            width = 12, height = 600, status = 'success',
+                            width = 12, height = 660, status = 'success',
                             plotlyOutput(outputId = 'boxchart', height = 500),
                             column(3, checkboxInput(inputId = 'option.box.title_center', label = 'Title center')),
                             column(3, checkboxInput(inputId = 'option.box.axis_x_angle45', label = 'Axis x angle 45')),
                             column(3, checkboxInput(inputId = 'option.box.Remove_legend', label = 'Remove legend')),
-                            column(3, checkboxInput(inputId = 'option.box.View_value', label = 'Show values'))
+                            column(3, checkboxInput(inputId = 'option.box.View_value', label = 'Show values')),
+                            column(12, selectInput(inputId = 'option.box.themes', label = '', choices = theme_list))
                         ),
                     ),
                     fluidRow(
@@ -247,12 +249,13 @@ ui <- dashboardPage(
             tabItem(tabName = 'chart_qq',
                     fluidRow(
                         box(title = 'QQ chart',
-                            width = 12, height = 600, status = 'success',
+                            width = 12, height = 660, status = 'success',
                             plotlyOutput(outputId = 'qqchart', height = 500),
                             column(3, checkboxInput(inputId = 'option.qq.title_center', label = 'Title center')),
                             column(3, checkboxInput(inputId = 'option.qq.axis_x_angle45', label = 'Axis x angle 45')),
                             column(3, checkboxInput(inputId = 'option.qq.Remove_legend', label = 'Remove legend')),
-                            column(3, checkboxInput(inputId = 'option.qq.View_value', label = 'Show values'))
+                            column(3, checkboxInput(inputId = 'option.qq.View_value', label = 'Show values')),
+                            column(12, selectInput(inputId = 'option.qq.themes', label = '', choices = theme_list))
                         ),
                     ),
                     fluidRow(
@@ -298,12 +301,13 @@ ui <- dashboardPage(
             tabItem(tabName = 'chart_scatter',
                     fluidRow(
                         box(title = 'Scatter chart',
-                            width = 12, height = 600, status = 'success',
+                            width = 12, height = 660, status = 'success',
                             plotlyOutput(outputId = 'scatterchart', height = 500),
                             column(3, checkboxInput(inputId = 'option.scatter.title_center', label = 'Title center')),
                             column(3, checkboxInput(inputId = 'option.scatter.axis_x_angle45', label = 'Axis x angle 45')),
                             column(3, checkboxInput(inputId = 'option.scatter.Remove_legend', label = 'Remove legend')),
-                            column(3, checkboxInput(inputId = 'option.scatter.View_value', label = 'Show values'))
+                            column(3, checkboxInput(inputId = 'option.scatter.View_value', label = 'Show values')),
+                            column(12, selectInput(inputId = 'option.scatter.themes', label = '', choices = theme_list))
                         ),
                     ),
                     fluidRow(
@@ -358,12 +362,13 @@ ui <- dashboardPage(
             tabItem(tabName = 'chart_line',
                     fluidRow(
                         box(title = 'Line chart',
-                            width = 12, height = 600, status = 'success',
+                            width = 12, height = 660, status = 'success',
                             plotlyOutput(outputId = 'linechart', height = 500),
                             column(3, checkboxInput(inputId = 'option.line.title_center', label = 'Title center')),
                             column(3, checkboxInput(inputId = 'option.line.axis_x_angle45', label = 'Axis x angle 45')),
                             column(3, checkboxInput(inputId = 'option.line.Remove_legend', label = 'Remove legend')),
-                            column(3, checkboxInput(inputId = 'option.line.View_value', label = 'Show values'))
+                            column(3, checkboxInput(inputId = 'option.line.View_value', label = 'Show values')),
+                            column(12, selectInput(inputId = 'option.line.themes', label = '', choices = theme_list))
                         ),
                     ),
                     fluidRow(
@@ -585,23 +590,30 @@ server <- function(input, output, session){
                     }
                 }
 
-                if(input$option.den.title_center == 1){
-                    p <- p + theme(plot.title = element_text(hjust = 0.5))
-                }
-
-                if(input$option.den.axis_x_angle45 == 1){
-                    p <- p + theme(axis.text.x = element_text(angle = 45, hjust = 1))
-                }
-
-                if(input$option.den.Remove_legend == 1){
-                    p <- p + theme(legend.position = "none")
-                }
-
-                if(input$option.den.View_value == 1){
-                    p <- p + stat_count(aes(y=..count.. ,label=..count..), geom = "text", vjust = -1.5)
-                }
                 ggplotly(p)
             })
+
+            if(input$option.den.themes != 'None'){
+                p <- p + shiny_themes(input$option.den.themes)
+            }
+
+            if(input$option.den.title_center == 1){
+                p <- p + theme(plot.title = element_text(hjust = 0.5))
+            }
+
+            if(input$option.den.axis_x_angle45 == 1){
+                p <- p + theme(axis.text.x = element_text(angle = 45, hjust = 1))
+            }
+
+            if(input$option.den.Remove_legend == 1){
+                p <- p + theme(legend.position = "none")
+            }
+
+            if(input$option.den.View_value == 1){
+                p <- p + stat_count(aes(y=..count.. ,label=..count..), geom = "text", vjust = -1.5)
+            }
+
+            ggplotly(p)
         })
 
         #boxchart ----
@@ -655,24 +667,31 @@ server <- function(input, output, session){
                     }
                 }
 
-                if(input$option.box.title_center == 1){
-                    p <- p + theme(plot.title = element_text(hjust = 0.5))
-                }
-
-                if(input$option.box.axis_x_angle45 == 1){
-                    p <- p + theme(axis.text.x = element_text(angle = 45, hjust = 1))
-                }
-
-                if(input$option.box.Remove_legend == 1){
-                    p <- p + theme(legend.position = "none")
-                }
-
-                if(input$option.box.View_value == 1){
-                    p <- p + stat_count(aes(y=..count.. ,label=..count..), geom = "text", vjust = -1.5) # 적절하게 조절 필요
-                }
                 ggplotly(p)
 
             })
+
+            if(input$option.box.themes != 'None'){
+                p <- p + shiny_themes(input$option.box.themes)
+            }
+
+            if(input$option.box.title_center == 1){
+                p <- p + theme(plot.title = element_text(hjust = 0.5))
+            }
+
+            if(input$option.box.axis_x_angle45 == 1){
+                p <- p + theme(axis.text.x = element_text(angle = 45, hjust = 1))
+            }
+
+            if(input$option.box.Remove_legend == 1){
+                p <- p + theme(legend.position = "none")
+            }
+
+            if(input$option.box.View_value == 1){
+                p <- p + stat_count(aes(y=..count.. ,label=..count..), geom = "text", vjust = -1.5) # 적절하게 조절 필요
+            }
+
+            ggplotly(p)
         })
 
 
@@ -720,24 +739,31 @@ server <- function(input, output, session){
                     }
                 }
 
-                if(input$option.qq.title_center == 1){
-                    p <- p + theme(plot.title = element_text(hjust = 0.5))
-                }
-
-                if(input$option.qq.axis_x_angle45 == 1){
-                    p <- p + theme(axis.text.x = element_text(angle = 45, hjust = 1))
-                }
-
-                if(input$option.qq.Remove_legend == 1){
-                    p <- p + theme(legend.position = "none")
-                }
-
-                if(input$option.qq.View_value == 1){
-                    p <- p + stat_count(aes(y=..count.. ,label=..count..), geom = "text", vjust = -1.5) # 적절하게 조절 필요
-                }
                 ggplotly(p)
 
             })
+
+            if(input$option.qq.themes != 'None'){
+                p <- p + shiny_themes(input$option.qq.themes)
+            }
+
+            if(input$option.qq.title_center == 1){
+                p <- p + theme(plot.title = element_text(hjust = 0.5))
+            }
+
+            if(input$option.qq.axis_x_angle45 == 1){
+                p <- p + theme(axis.text.x = element_text(angle = 45, hjust = 1))
+            }
+
+            if(input$option.qq.Remove_legend == 1){
+                p <- p + theme(legend.position = "none")
+            }
+
+            if(input$option.qq.View_value == 1){
+                p <- p + stat_count(aes(y=..count.. ,label=..count..), geom = "text", vjust = -1.5) # 적절하게 조절 필요
+            }
+
+            ggplotly(p)
 
         })
 
@@ -793,24 +819,31 @@ server <- function(input, output, session){
                     }
                 }
 
-                if(input$option.scatter.title_center == 1){
-                    p <- p + theme(plot.title = element_text(hjust = 0.5))
-                }
-
-                if(input$option.scatter.axis_x_angle45 == 1){
-                    p <- p + theme(axis.text.x = element_text(angle = 45, hjust = 1))
-                }
-
-                if(input$option.scatter.Remove_legend == 1){
-                    p <- p + theme(legend.position = "none")
-                }
-
-                if(input$option.scatter.View_value == 1){
-                    p <- p + stat_count(aes(y=..count.. ,label=..count..), geom = "text", vjust = -1.5) # 적절하게 조절 필요
-                }
                 ggplotly(p)
             })
 
+            if(input$option.scatter.themes != 'None'){
+                p <- p + shiny_themes(input$option.scatter.themes)
+            }
+
+            if(input$option.scatter.title_center == 1){
+                p <- p + theme(plot.title = element_text(hjust = 0.5))
+            }
+
+            if(input$option.scatter.axis_x_angle45 == 1){
+                p <- p + theme(axis.text.x = element_text(angle = 45, hjust = 1))
+            }
+
+            if(input$option.scatter.Remove_legend == 1){
+                p <- p + theme(legend.position = "none")
+            }
+
+            if(input$option.scatter.View_value == 1){
+                p <- p + stat_count(aes(y=..count.. ,label=..count..), geom = "text", vjust = -1.5) # 적절하게 조절 필요
+            }
+
+
+            ggplotly(p)
         })
 
 
@@ -864,25 +897,32 @@ server <- function(input, output, session){
                     }
                 }
 
-                if(input$option.line.title_center == 1){
-                    p <- p + theme(plot.title = element_text(hjust = 0.5))
-                }
-
-                if(input$option.line.axis_x_angle45 == 1){
-                    p <- p + theme(axis.text.x = element_text(angle = 45, hjust = 1))
-                }
-
-                if(input$option.line.Remove_legend == 1){
-                    p <- p + theme(legend.position = "none")
-                }
-
-                if(input$option.line.View_value == 1){
-                    p <- p + stat_count(aes(y=..count.. ,label=..count..), geom = "text", vjust = -1.5) # 적절하게 조절 필요
-                }
                 ggplotly(p)
 
 
             })
+
+            if(input$option.line.themes != 'None'){
+                p <- p + shiny_themes(input$option.line.themes)
+            }
+
+            if(input$option.line.title_center == 1){
+                p <- p + theme(plot.title = element_text(hjust = 0.5))
+            }
+
+            if(input$option.line.axis_x_angle45 == 1){
+                p <- p + theme(axis.text.x = element_text(angle = 45, hjust = 1))
+            }
+
+            if(input$option.line.Remove_legend == 1){
+                p <- p + theme(legend.position = "none")
+            }
+
+            if(input$option.line.View_value == 1){
+                p <- p + stat_count(aes(y=..count.. ,label=..count..), geom = "text", vjust = -1.5) # 적절하게 조절 필요
+            }
+
+            ggplotly(p)
 
         })
 
