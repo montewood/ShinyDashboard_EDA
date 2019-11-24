@@ -6,6 +6,7 @@ library(ggplot2)
 library(DT)
 library(data.table)
 library(plotly)
+library(ggthemes)
 
 
 source('./chart_functions.R', encoding = "UTF-8") # 차트함수 불러오기
