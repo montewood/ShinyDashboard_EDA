@@ -9,7 +9,7 @@ library(plotly)
 library(ggthemes)
 
 
-source('./chart_functions.R', encoding = "UTF-8") # 차트함수 불러오기
+source('C:/Users/JDW/Desktop/git/ShinyDashboard_EDA/ShinyDashboard_EDA/chart_functions.R', encoding = "UTF-8") # 차트함수 불러오기
 
 
 # testdata
@@ -428,9 +428,6 @@ ui <- dashboardPage(
 )
 
 # ----
-
-
-
 
 server <- function(input, output, session){
 
