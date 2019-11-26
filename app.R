@@ -9,13 +9,7 @@ library(plotly)
 library(ggthemes)
 
 
-source('C:/Users/JDW/Desktop/git/ShinyDashboard_EDA/ShinyDashboard_EDA/chart_functions.R', encoding = "UTF-8") # 차트함수 불러오기
-
-
-# testdata
-
-testdata <- fread('C:/Users/JDW/Desktop/my_cloud/OneDrive/R/shiny/EDA/data/dc_sample.csv', fill = T)
-glimpse(testdata)
+source('C:/Users/JDW/Desktop/git/ShinyDashboard_EDA/ShinyDashboard_EDA/chart_functions.R', encoding = "UTF-8") # loading chart & global options
 
 
 # app start ----
@@ -29,7 +23,7 @@ ui <- dashboardPage(
                       "text/csv",
                       "text/comma-separated-values,text/plain",
                       ".csv")),
-        #sampleing 기능
+        #sampleing func
         conditionalPanel(
             condition = "output.fileUploaded == 1",
             checkboxInput(inputId = 'sample_checkbox', label = strong('Setting sample'))
@@ -99,7 +93,7 @@ ui <- dashboardPage(
                             title = 'Labs Setting',
                             id = 'box.set_labs',
                             width = 4, height = 320,
-                            # conditionalPanel condition이 '.' 인식이 안되므로 예외적으로 '_' 사용
+                            #conditionalPanel condition is '.' Use '_' as exception because it is not recognized
                             checkboxInput(inputId = 'bar_labs', label = 'set labs'),
                             conditionalPanel(condition = 'input.bar_labs == 1',
                                              textInput(inputId = 'bar.title_text', label = 'Title', value = 'Plot_title'),
@@ -111,10 +105,8 @@ ui <- dashboardPage(
                             title = 'Labs_text Setting',
                             id = 'set_text_box',
                             width = 4, height = 320,
-                            # conditionalPanel condition이 '.' 인식이 안되므로 예외적으로 '_' 사용
                             checkboxInput(inputId = 'bar_themes', label = 'set themes'),
                             conditionalPanel(condition = 'input.bar_themes == 1',
-                                             # *!중요!* sliderinput 값으로 변경 테스트 해보기
                                              textInput(inputId = 'bar.title_size', label = 'Title_size', value = 20),
                                              textInput(inputId = 'bar.axis_x_size', label = 'x_axis_size', value = 14),
                                              textInput(inputId = 'bar.axis_y_size', label = 'y_axis_size', value = 14))
@@ -158,7 +150,6 @@ ui <- dashboardPage(
                             title = 'Labs Setting',
                             id = 'den.set_labs',
                             width = 4, height = 320,
-                            # conditionalPanel condition이 '.' 인식이 안되므로 예외적으로 '_' 사용
                             checkboxInput(inputId = 'den_labs', label = 'set labs'),
                             conditionalPanel(condition = 'input.den_labs == 1',
                                              textInput(inputId = 'den.title_text', label = 'Title', value = 'Plot_title'),
@@ -170,10 +161,8 @@ ui <- dashboardPage(
                             title = 'Labs_text Setting',
                             id = 'den.set_labs_text',
                             width = 4, height = 320,
-                            # conditionalPanel condition이 '.' 인식이 안되므로 예외적으로 '_' 사용
                             checkboxInput(inputId = 'den_themes', label = 'set themes'),
                             conditionalPanel(condition = 'input.den_themes == 1',
-                                             # *!중요!* sliderinput 값으로 변경 테스트 해보기
                                              textInput(inputId = 'den.title_size', label = 'Title_size', value = 20),
                                              textInput(inputId = 'den.axis_x_size', label = 'x_axis_size', value = 14),
                                              textInput(inputId = 'den.axis_y_size', label = 'y_axis_size', value = 14))
@@ -220,7 +209,6 @@ ui <- dashboardPage(
                             title = 'Labs Setting',
                             id = 'box.set_labs',
                             width = 4, height = 320,
-                            # conditionalPanel condition이 '.' 인식이 안되므로 예외적으로 '_' 사용
                             checkboxInput(inputId = 'box_labs', label = 'set labs'),
                             conditionalPanel(condition = 'input.box_labs == 1',
                                              textInput(inputId = 'box.title_text', label = 'Title', value = 'Plot_title'),
@@ -232,10 +220,8 @@ ui <- dashboardPage(
                             title = 'Labs_text Setting',
                             id = 'box.set_labs_text',
                             width = 4, height = 320,
-                            # conditionalPanel condition이 '.' 인식이 안되므로 예외적으로 '_' 사용
                             checkboxInput(inputId = 'box_themes', label = 'set themes'),
                             conditionalPanel(condition = 'input.box_themes == 1',
-                                             # *!중요!* sliderinput 값으로 변경 테스트 해보기
                                              textInput(inputId = 'box.title_size', label = 'Title_size', value = 20),
                                              textInput(inputId = 'box.axis_x_size', label = 'x_axis_size', value = 14),
                                              textInput(inputId = 'box.axis_y_size', label = 'y_axis_size', value = 14))
@@ -274,7 +260,6 @@ ui <- dashboardPage(
                             title = 'Labs Setting',
                             id = 'set_visual_box',
                             width = 4, height = 320,
-                            # conditionalPanel condition이 '.' 인식이 안되므로 예외적으로 '_' 사용
                             checkboxInput(inputId = 'qq_labs', label = 'set labs'),
                             conditionalPanel(condition = 'input.qq_labs == 1',
                                              textInput(inputId = 'qq.title_text', label = 'Title', value = 'Plot_title'),
@@ -288,7 +273,6 @@ ui <- dashboardPage(
                             width = 4, height = 320,
                             checkboxInput(inputId = 'qq_themes', label = 'set themes'),
                             conditionalPanel(condition = 'input.qq_themes == 1',
-                                             # *!중요!* sliderinput 값으로 변경 테스트 해보기
                                              textInput(inputId = 'qq.title_size', label = 'Title_size', value = 20),
                                              textInput(inputId = 'qq.axis_x_size', label = 'x_axis_size', value = 14),
                                              textInput(inputId = 'qq.axis_y_size', label = 'y_axis_size', value = 14))
@@ -334,7 +318,6 @@ ui <- dashboardPage(
                             title = 'Labs Setting',
                             id = 'scatter.set_labs',
                             width = 4, height = 320,
-                            # conditionalPanel condition이 '.' 인식이 안되므로 예외적으로 '_' 사용
                             checkboxInput(inputId = 'scatter_labs', label = 'set labs'),
                             conditionalPanel(condition = 'input.scatter_labs == 1',
                                              textInput(inputId = 'scatter.title_text', label = 'Title', value = 'Plot_title'),
@@ -348,7 +331,6 @@ ui <- dashboardPage(
                             width = 4, height = 320,
                             checkboxInput(inputId = 'scatter_themes', label = 'set themes'),
                             conditionalPanel(condition = 'input.scatter_themes == 1',
-                                             # *!중요!* sliderinput 값으로 변경 테스트 해보기
                                              textInput(inputId = 'box.title_size', label = 'Title_size', value = 20),
                                              textInput(inputId = 'scatter.axis_x_size', label = 'x_axis_size', value = 14),
                                              textInput(inputId = 'scatter.axis_y_size', label = 'y_axis_size', value = 14))
@@ -391,7 +373,6 @@ ui <- dashboardPage(
                             title = 'Labs Setting',
                             id = 'set_visual_box',
                             width = 4, height = 320,
-                            # conditionalPanel condition이 '.' 인식이 안되므로 예외적으로 '_' 사용
                             checkboxInput(inputId = 'line_labs', label = 'set labs'),
                             conditionalPanel(condition = 'input.line_labs == 1',
                                              textInput(inputId = 'line.title_text', label = 'Title', value = 'Plot_title'),
@@ -405,7 +386,6 @@ ui <- dashboardPage(
                             width = 4, height = 320,
                             checkboxInput(inputId = 'line_themes', label = 'set themes'),
                             conditionalPanel(condition = 'input.line_themes == 1',
-                                             # *!중요!* sliderinput 값으로 변경 테스트 해보기
                                              textInput(inputId = 'line.title_size', label = 'Title_size', value = 20),
                                              textInput(inputId = 'line.axis_x_size', label = 'x_axis_size', value = 14),
                                              textInput(inputId = 'line.axis_y_size', label = 'y_axis_size', value = 14))
@@ -431,7 +411,6 @@ ui <- dashboardPage(
 
 server <- function(input, output, session){
 
-    # insertdata <- fread('C:/Users/JDW/Desktop/my_cloud/OneDrive/R/shiny/EDA/data/dc_sample.csv', fill = T)
 
     observeEvent(input$file1, {
 
@@ -686,7 +665,7 @@ server <- function(input, output, session){
             }
 
             if(input$option.box.View_value == 1){
-                p <- p + stat_count(aes(y=..count.. ,label=..count..), geom = "text", vjust = -1.5) # 적절하게 조절 필요
+                p <- p + stat_count(aes(y=..count.. ,label=..count..), geom = "text", vjust = -1.5)
             }
 
             ggplotly(p)
@@ -758,7 +737,7 @@ server <- function(input, output, session){
             }
 
             if(input$option.qq.View_value == 1){
-                p <- p + stat_count(aes(y=..count.. ,label=..count..), geom = "text", vjust = -1.5) # 적절하게 조절 필요
+                p <- p + stat_count(aes(y=..count.. ,label=..count..), geom = "text", vjust = -1.5)
             }
 
             ggplotly(p)
@@ -837,7 +816,7 @@ server <- function(input, output, session){
             }
 
             if(input$option.scatter.View_value == 1){
-                p <- p + stat_count(aes(y=..count.. ,label=..count..), geom = "text", vjust = -1.5) # 적절하게 조절 필요
+                p <- p + stat_count(aes(y=..count.. ,label=..count..), geom = "text", vjust = -1.5)
             }
 
 
@@ -917,7 +896,7 @@ server <- function(input, output, session){
             }
 
             if(input$option.line.View_value == 1){
-                p <- p + stat_count(aes(y=..count.. ,label=..count..), geom = "text", vjust = -1.5) # 적절하게 조절 필요
+                p <- p + stat_count(aes(y=..count.. ,label=..count..), geom = "text", vjust = -1.5)
             }
 
             ggplotly(p)
