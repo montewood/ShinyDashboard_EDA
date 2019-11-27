@@ -29,7 +29,7 @@ Each chart page has same features
 - Labs Setting
   - can change title and axis name
 - Labs text Setting 
-  - cha chage title and axis size
+  - can chage title and axis size
 - Title center 
   - (If checked) Chart title will be set to center
 - Axis x angle 45 
